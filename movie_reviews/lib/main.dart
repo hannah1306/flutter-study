@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
     // 화면에 보이는 영역
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 80,
+          toolbarHeight: 60,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           title: Text(
@@ -75,10 +75,53 @@ class HomePage extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
                   labelText: "영화 제목을 검색해주세요.",
-                  suffixIcon: Icon(Icons.search),
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  suffixIcon: Icon(Icons.search, color: Colors.black),
                 ),
               ),
+            ),
+            Divider(height: 1),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: dataList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 3),
+                      height: 200,
+                      child: Card(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.network(
+                              dataList[index]["imgUrl"],
+                              fit: BoxFit.cover,
+                            ),
+                            Opacity(
+                              opacity: 0.5,
+                              child: Container(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Center(
+                                child: Text(
+                              dataList[index]["category"],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             ),
           ],
         ));
